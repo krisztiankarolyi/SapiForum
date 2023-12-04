@@ -9,10 +9,37 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function myPosts(){
+    public function myPosts(Request $request){
         $user = auth()->user();
-        $posts = $user->posts;
 
-        return view('user.myPosts', compact('posts'));
+        return view('user.myPosts');
     }
+
+    public function myPostsFiltered(Request $request)
+    {
+        $user = auth()->user();
+
+        if ($request->input('filter') !== null) {
+            $filter = $request->input('filter');
+            $posts = Post::where('user_id', $user->id)
+                ->where(function ($query) use ($filter) {
+                    $query->where('title', 'like', "%$filter%")
+                        ->orWhere('category', 'like', "%$filter%");
+                })
+                ->get();
+
+            foreach ($posts as $post) {
+                $post->comments_count = $post->comments()->count();
+            }
+            return response()->json(['posts' => $posts]);
+        }
+
+        $posts =  $user->posts;
+        foreach ($posts as $post) {
+            $post->comments_count = $post->comments()->count();
+        }
+        return response()->json(['posts' => $posts]);
+    }
+
+
 }

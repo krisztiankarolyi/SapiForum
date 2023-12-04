@@ -21,4 +21,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/myPosts', [UserController::class, 'myPosts'])->name('myPosts');
+    Route::get('/myPostsFiltered', [UserController::class, 'myPostsFiltered'])->name('myPostsFiltered');
 });
