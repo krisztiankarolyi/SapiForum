@@ -28,7 +28,7 @@ class PostFactory extends Factory
             'category' => $this->faker->word,
             'title' => $this->faker->word,
             'content' => $this->faker->paragraph,
-            'img_ref' => $this->faker->imageUrl(),
+            'img_ref' => "https://picsum.photos/300/300",
             'created_at' => $this->faker->dateTimeBetween('-1 month', 'now'), // Set a random date within the last month
         ];
     }

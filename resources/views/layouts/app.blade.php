@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/img/sapi_logo.png')}}">
     <title>{{ config('app.name', 'SapiForum') }}</title>
 
     <!-- Fonts -->
@@ -50,25 +50,34 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <li class="nav-item">
+                                <div  class="d-flex align-items-center">
+                                    <img src="{{ Auth::user()->avatar_url }}" class="logo">
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown d-flex align-items-center">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
+                                <div class="dropdown-menu dropdown-menu-end text-start" aria-labelledby="navbarDropdown">
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
 
+                                    <a class="dropdown-item" href="{{ route('myPosts') }}">
+                                        My posts
+                                    </a>
 
                                     <a class="dropdown-item" href="{{ route('home') }}">
-                                        My posts
+                                        Manage profile
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
                                     </a>
 
                                 </div>

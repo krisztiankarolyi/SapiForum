@@ -30,7 +30,7 @@ class CommentFactory extends Factory
                 'user_id' => random_int(1, 3),
                 'post_id' => random_int(1, 3),
                 'content' => $this->faker->paragraph,
-                'img_ref' => $this->faker->imageUrl(),
+                'img_ref' => "https://picsum.photos/250/250",
                 'added_at' => $this->faker->dateTimeBetween('-1 month', 'now'), // Set a random date within the last month
             ];
         }
