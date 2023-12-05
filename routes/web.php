@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/storePost', [UserController::class, 'storePost'])->name('storePost');
     Route::get('/createPost', [UserController::class, 'createPost'])->name('createPost');
+
+    Route::get('/editPost/{id}', [UserController::class, 'editPost'])->name('editPost');
+    Route::post('/updatePost', [UserController::class, 'updatePost'])->name('updatePost');
+
+    Route::delete('/deletePost/{id}', [UserController::class, 'deletePost'])->name('deletePost');
+
+    Route::get('/editProfile', [UserController::class, 'editProfile'])->name('editProfile');
+    Route::post('/updateProfile', [UserController::class, 'updateProfile'])->name('updateProfile');
+
+    Route::get('/viewPost/{id}', [Controller::class, 'viewPost'])->name('viewPost');
+
+    Route::post('/addComment', [UserController::class, 'addComment'])->name('addComment');
 });

@@ -9,16 +9,24 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('storage/img/sapi_logo.png')}}">
     <title>{{ config('app.name', 'SapiForum') }}</title>
 
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('storage/css/app.css') }}" rel="stylesheet">
-    <!-- Scripts -->
+
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-success shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-success shadow-sm sticky-top" >
             <div class="container">
                 <img src="{{ asset('storage/img/sapi_logo.png')}}" class="logo">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -67,17 +75,17 @@
                                     </form>
 
                                     <a class="dropdown-item" href="{{ route('myPosts') }}">
-                                        My posts
+                                        📝 My posts
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('home') }}">
-                                        Manage profile
+                                    <a class="dropdown-item" href="{{ route('editProfile') }}">
+                                        ⚙️ Manage profile
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        🚪🏃‍♀️ {{ __('Logout') }}
                                     </a>
 
                                 </div>
@@ -87,7 +95,7 @@
                             <div class="d-flex align-items-center">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('createPost') }}">
-                                       New Post
+                                        📝 New Post
                                     </a>
                                 </li>
                             </div>
@@ -95,7 +103,7 @@
                             <div class="d-flex align-items-center">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('posts') }}">
-                                        Search posts
+                                        🔍 Search posts
                                     </a>
                                 </li>
                             </div>
