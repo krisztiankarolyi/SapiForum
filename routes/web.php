@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
+Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
@@ -21,5 +22,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/myPosts', [UserController::class, 'myPosts'])->name('myPosts');
-    Route::get('/myPostsFiltered', [UserController::class, 'myPostsFiltered'])->name('myPostsFiltered');
+    Route::get('/posts', [UserController::class, 'posts'])->name('posts');
+
+    Route::post('/storePost', [UserController::class, 'storePost'])->name('storePost');
+    Route::get('/createPost', [UserController::class, 'createPost'])->name('createPost');
 });

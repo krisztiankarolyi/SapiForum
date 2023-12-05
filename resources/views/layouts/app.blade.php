@@ -86,7 +86,7 @@
 
                             <div class="d-flex align-items-center">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('home') }}">
+                                    <a class="nav-link" href="{{ route('createPost') }}">
                                        New Post
                                     </a>
                                 </li>
@@ -94,7 +94,7 @@
 
                             <div class="d-flex align-items-center">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('home') }}">
+                                    <a class="nav-link" href="{{ route('posts') }}">
                                         Search posts
                                     </a>
                                 </li>

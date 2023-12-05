@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h1>My Posts</h1>
-        <form id="filter_area" action="{{ route('myPosts') }}" method="GET">
+        <h1>Search all users' posts</h1>
+        <form id="filter_area" action="{{ route('posts') }}" method="GET">
             <div style="display: flex;  justify-content: space-between">
                 <input class="form-control" style="width: 49%" type="text" placeholder="Filter for title" id="title" name="title" value="{{ request('title') }}">
                 <input class="form-control" style="width: 49%"  type="text" placeholder="Filter for category" id="category" name="category" value="{{ request('category') }}">
@@ -29,9 +29,9 @@
                     <option value="desc" {{ request('direction') == 'desc' ? 'selected' : '' }}>
                         Descending order
                     </option>
-                </select><br>
+                </select>
             </div><br>
-            <input class="form-control" type="number" min="1" max="50" placeholder="limit of shown posts per search" id="limit" name="limit" value="{{ request('limit') }}">
+            <input class="form-control" type="number" min="1" max="50" placeholder="limit of shown posts per search" id="limit" name="limit" value="{{request('limit')}}">
             <br>
 
             <input type="submit" class="form-control btn btn-success" value="Search">
@@ -39,10 +39,10 @@
 
         <hr>
 
-        <div class="row" style="display: flex; flex-direction: row; align-items: stretch; align-content: stretch">
+        <div class="row">
             @foreach($posts as $post)
                 <div class="col-md-4 mb-4">
-                    <div class="card" style="height: 100%">
+                    <div class="card" style="height: 100%;">
                         <div class="card-body">
                             <h5 class="card-title text-center">  <img style="float: left" src="{{ $post->img_ref }}" class="postImg" alt="Post Image"> {{ $post->title }}</h5>
                             <h6 class="text-center">Category: {{  $post->category }}</h6>
@@ -61,10 +61,6 @@
                             <br>
                             <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between ">
                                 <a href="#">Go to post</a>
-                                @if($post->user_id == \Illuminate\Support\Facades\Auth::user()->id)
-                                <a href="#">Edit</a>
-                                <a href="#" class="text-danger">Delete</a>
-                                @endif
                             </div>
 
                         </div>
