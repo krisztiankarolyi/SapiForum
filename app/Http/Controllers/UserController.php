@@ -15,15 +15,9 @@ class UserController extends Controller
     public function myPosts(Request $request){
         $user = auth()->user();
         $query = $user->posts();
-
-        // Limitálás
-        $limit = $request->query('limit');
-        $query->when($limit, function ($query, $limit) {
-            return $query->limit($limit);
-        }, function ($query) {
-            // Ha nincs limit megadva, akkor alapértelmezett érték: 10
-            return $query->limit(10);
-        });
+        $limit = $request->query('limit', 10);
+        $limit = min($limit, 50);
+        $request->merge(['limit' => $limit]);
 
         // Rendezés
         $orderBy = $request->query('orderby', 'created_at');
@@ -40,6 +34,8 @@ class UserController extends Controller
             $query->where('category', 'LIKE', '%' . $category . '%');
         }
 
+        $query->limit($limit);
+
         $posts = $query->get();
 
         foreach ($posts as $post) {
@@ -53,13 +49,9 @@ class UserController extends Controller
         $query = Post::query();
 
         // Limitálás
-        $limit = $request->query('limit');
-        $query->when($limit, function ($query, $limit) {
-            return $query->limit($limit);
-        }, function ($query) {
-            // Ha nincs limit megadva, akkor alapértelmezett érték: 10
-            return $query->limit(10);
-        });
+        $limit = $request->query('limit', 10);
+        $limit = min($limit, 50);
+        $request->merge(['limit' => $limit]);
 
         // Rendezés
         $orderBy = $request->query('orderby', 'created_at');
@@ -81,6 +73,8 @@ class UserController extends Controller
             $authorID =  User::where('name', $author)->first()->id;
             $query->where('user_id', '=', '%' . $authorID . '%');
         }
+
+        $query->limit($limit);
 
         $posts = $query->get();
         foreach ($posts as $post) {
@@ -213,5 +207,17 @@ class UserController extends Controller
         return redirect()->back()->withErrors('failed', 'Failed to add comment.');
     }
 
+    public function deleteComment(Request $request)
+    {
+        $comment = Comment::find($request->comment_id);
+        $user = Auth()->user();
 
+        if ($comment && $user) {
+            if ($user == $comment->user) {
+                if ($comment->delete())
+                    return redirect()->back()->with('success', 'Comment deleted successfully.');
+            }
+        }
+        return redirect()->back()->with('error', 'Could not delete comment with id: '.$request->comment_id.' user: '.Auth::user()->name);
+    }
 }
