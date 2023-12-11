@@ -26,10 +26,9 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <div class="form-group">
                                 <label for="content">Content:</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="4" required value="{{$post->content}}"></textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="4" required >{{$post->content}}</textarea>
                                 @error('content')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

@@ -76,8 +76,7 @@
                     <i>Add your comment here</i>
                     <div style="display: flex; flex-direction: row; justify-content: space-between; align-content: center; align-items: center">
                         <img class="logo" src="{{Auth::user()->avatar_url}}">
-                        <textarea  class="form-control" style="width: 68%; max-height: 50px" id="content_" name="content_">
-                        </textarea>
+                        <textarea  class="form-control" style="width: 68%; max-height: 50px" id="content_" name="content_"></textarea>
                         <input type="submit" class="btn btn-info text-center" style="width: 15%" value="Add">
                     </div>
                 </form>

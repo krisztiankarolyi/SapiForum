@@ -3,8 +3,9 @@
 @section('content')
     <div class="container">
         @if(session('state'))
-            <p class="bg-success text-center text-light">{{session('state')}}</p>
+            <p  class="alert alert-primary" role="alert">{{session('state')}}</p>
         @endif
+
         <h1>My Posts</h1>
         <form id="filter_area" action="{{ route('myPosts') }}" method="GET">
             <div style="display: flex;  justify-content: space-between">

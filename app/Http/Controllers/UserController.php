@@ -96,13 +96,12 @@ class UserController extends Controller
             'img_ref' => 'string'
         ]);
 
-        // You can add user_id to the post if needed
         $validatedData['user_id'] = auth()->user()->id;
 
-        // Save the post to the database
-        Post::create($validatedData);
-
-        return redirect()->route('myPosts');
+        if(Post::create($validatedData))
+            return redirect()->route('myPosts')->withState('Post created Successfully');
+        else
+            return redirect()->route('myPosts')->withErrors('Could not create post ');
     }
 
     public function editPost(Request $request, $id){
