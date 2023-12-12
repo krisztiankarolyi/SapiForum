@@ -137,7 +137,7 @@ class UserController extends Controller
 
         // Ellenőrizzük, hogy a bejegyzés létezik-e
         if (!$post) {
-            abort(404); // Vagy egyéb kezelés, például visszatérés a hibaoldalra
+            return redirect()->route('myPosts')->withErrors('Could update delete post ');
         }
 
         $validatedData = $request->validate([

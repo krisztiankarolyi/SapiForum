@@ -41,4 +41,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/addComment', [UserController::class, 'addComment'])->name('addComment');
     Route::delete('/deleteComment', [UserController::class, 'deleteComment'])->name('deleteComment');
 
+
 });
