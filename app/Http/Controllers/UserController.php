@@ -147,6 +147,8 @@ class UserController extends Controller
             'img_ref' => 'string'
         ]);
 
+        $validatedData['title'] = htmlspecialchars( $validatedData['title']);
+
         // Frissítjük a bejegyzés a validált adatokkal
         if($post->update($validatedData))
             return redirect()->route('myPosts')->withState('Post updated successfully');
