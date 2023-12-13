@@ -52,7 +52,9 @@
                                     </i>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">{{ $comment->content }}</p>
+                                    <div class="originalContent">
+                                        <p class="card-text ">{{ $comment->content }}</p>
+                                    </div>
                                 </div>
                                 <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; align-content: center">
                                     @if($comment->user_id == Auth::user()->id)
@@ -65,14 +67,16 @@
                                                 <input type="submit" class="deleteBtn" value="Delete">
                                             </form>
 
-                                            <input type="button" class="btn btn-info editButton"   style="background: rgba(0,0,0,0); border: 0; color: blue;"  value="Edit">
+                                            <input type="button" class="btn btn-info editButton" style="background: rgba(0,0,0,0); border: 0; color: blue;" value="Edit">
+                                            <input type="button" class="btn btn-secondary cancelButton" style="background: rgba(0,0,0,0); border: 0; color: red; display: none;" value="Cancel">
                                             <div class="update-form" style="display:none;">
                                                 <form action="{{ route('updateComment') }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="comment_id" value="{{$comment->id}}">
                                                     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                                                    <textarea style="min-width: 500px; min-height: 100px; max-height: 100px; max-width: 500px;" name="new_content" class="form-control">{{$comment->content}}</textarea>
+                                                    <textarea style="min-width: 500px; min-height: 100px; max-height: 100px; max-width: 500px;" name="new_content" class="form-control newContent">{{$comment->content}}</textarea>
                                                     <input type="button" class="btn btn-success saveButton" value="Save">
+                                                    <input type="button" class="btn btn-secondary cancelButton" style="background: rgba(0,0,0,0); border: 0; color: red;" value="Cancel">
                                                 </form>
                                             </div>
                                 </div>
@@ -103,25 +107,40 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $(".editButton").click(function () {
-                // Hide the edit button and show the update form
+            $(document).on("click", ".editButton", function () {
+                // Eltávolítjuk az előzőleg létrehozott "Cancel" gombokat
+                $(".cancelButton").remove();
+
+                // Hide the edit button, show the update form, and show the cancel button
                 $(this).closest(".comment-actions").find(".editButton").hide();
                 $(this).closest(".comment-actions").find(".update-form").show();
+
+                // Hozzáadjuk az új "Cancel" gombot
+                var cancelButton = $("<input type='button' class='btn btn-secondary cancelButton' style='background: rgba(0,0,0,0); border: 0; color: red;' value='Cancel'>");
+                $(this).closest(".comment-actions").append(cancelButton);
+
+                $(this).closest('.originalContent').hide();
+            });
+
+            $(document).on("click", ".cancelButton", function () {
+                $(this).closest(".comment-actions").find(".update-form").hide();
+                $(this).closest(".comment-actions").find(".editButton").show();
+                $(this).remove(); // Eltávolítjuk a "Cancel" gombot
+                $$(this)('.originalContent').show();
             });
 
             $(".saveButton").click(function () {
                 // Hide the update form and show the edit button
                 $(this).closest(".comment-actions").find(".update-form").hide();
                 $(this).closest(".comment-actions").find(".editButton").show();
-
-                // Corrected the cookie setting
+                $(this).closest(".comment-actions").find(".cancelButton").hide();
+                $(this).closest('.originalContent').show();
                 document.cookie = `XSRF-TOKEN=${$('meta[name="csrf-token"]').attr('content')}`;
 
                 var apiEndpoint = "http://127.0.0.1:8000/api/updateComment";
 
                 // var apiEndpoint = "{{ url('/api/updateComment') }}";
 
-                // Send the form data to the updateComment function
                 $.ajax({
                     type: "POST",
                     url: apiEndpoint,
@@ -131,13 +150,11 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     },
                     success: function (response) {
-                        // Handle success response
                         console.log(response);
                         alert("Comment updated successfully!");
                         location.reload();
                     },
                     error: function (error) {
-                        // Handle error response
                         console.log(error);
                         alert("Error updating comment!");
                     }
