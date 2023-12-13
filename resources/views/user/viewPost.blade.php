@@ -137,7 +137,7 @@
                 $(this).closest('.originalContent').show();
                 document.cookie = `XSRF-TOKEN=${$('meta[name="csrf-token"]').attr('content')}`;
 
-                var apiEndpoint = "http://127.0.0.1:8000/api/updateComment";
+                var apiEndpoint = "{{url('/api/updateComment')}}";
 
                 // var apiEndpoint = "{{ url('/api/updateComment') }}";
 
