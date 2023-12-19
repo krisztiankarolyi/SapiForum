@@ -122,15 +122,26 @@ class UserController extends Controller
         if($post && $user){
             if($user == $post->user)
             {
-                if($post->delete())
+                // Check if $post has any comments
+                $comments = $post->comments();
+
+                if($comments->count() > 0) {
+                    // If there are comments, delete them first
+                    $comments->delete();
+                }
+
+                // Now, delete the post
+                if($post->delete()) {
                     return redirect()->route('myPosts')->withState('Post deleted successfully');
-                else
-                    return redirect()->route('myPosts')->withErrors('Could not delete post ');
+                } else {
+                    return redirect()->route('myPosts')->withErrors('Could not delete post');
+                }
             }
         }
-        return redirect()->route('myPosts')->withErrors('Could not delete post ');
 
+        return redirect()->route('myPosts')->withErrors('Could not delete post');
     }
+
     public function updatePost(Request $request){
         $id=$request->id;
         $post = Post::find($id);

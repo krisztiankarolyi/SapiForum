@@ -7,20 +7,28 @@
     <div class="container">
         <div class="row justify-content-center" >
             <div class="col-md-8">
-                <div class="card mb-4" style="max-height: 35vh; overflow-y: auto;">
-                    <div class="card-header" style="display: flex; flex-direction: row; align-items: center; align-content: center; justify-content: space-between">
-                        <p class="card-text">written by
-                            <img class="avatarSmall" src="{{$post->user->avatar_url}}">
-                            {{ $post->user->name }}
-                        </p>
-                        <h3>{{$post->title}}</h3>
-                        <i>
-                            {{ $post->created_at }}
-                        </i>
-
+                <div class="card mb-4" style="max-height: 55vh; overflow-y: auto;">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="card-text">
+                                    written by
+                                    <img class="avatarSmall" src="{{$post->user->avatar_url}}">
+                                    {{ $post->user->name }}
+                                </p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <i>{{ $post->created_at }}</i>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 style="font-size: 1.3em">{{$post->title}}</h3>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body" style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <img src="{{ $post->img_ref }}" class="" alt="Post Image" style="max-height: 150px; max-width: 150px; padding: 10px;">
+                        <img src="{{ $post->img_ref }}" class="" alt="Post Image" style="max-height: 200px; max-width: 250px; padding: 10px;">
                         <p style="width: 70%;" class="card-text">{{ $post->content }}</p>
                     </div>
                 </div>
